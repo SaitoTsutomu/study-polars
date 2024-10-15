@@ -1,8 +1,8 @@
 """
 下記を実行して何も出力されなければ問題なし
 ```
-uv run src/tools/create_check_code.py
-(cd tmp; uv run code_ok.py) | grep NG
+uv run src/tools/create_check_code.py &&\
+(cd tmp; uv run code_ok.py) | grep NG &&\
 (cd tmp; uv run code_ng.py) | grep OK
 ```
 """  # noqa: INP001
@@ -107,7 +107,9 @@ def create_check_code(nb_path, fp_ok, fp_ng):
                 fp_ng.write(f"{source}\n")
 
 
-in_nb = Path("nbs/study_polars.ipynb")
-out_ok = Path("tmp/code_ok.py")
-out_ng = Path("tmp/code_ng.py")
-create_check_code(in_nb, out_ok.open("w"), out_ng.open("w"))
+if __name__ == "__main__":
+    in_nb = Path("nbs/study_polars.ipynb")
+    out_ok = Path("tmp/code_ok.py")
+    out_ng = Path("tmp/code_ng.py")
+    with out_ok.open("w") as fp_ok, out_ng.open("w") as fp_ng:
+        create_check_code(in_nb, fp_ok, fp_ng)
