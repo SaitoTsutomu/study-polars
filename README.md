@@ -14,22 +14,26 @@ https://polars-ja.github.io/docs-ja/
 
 https://docs.astral.sh/uv/
 
-リポジトリをクローンしてください。
+リポジトリ一式をダウンロードして解凍してください。
 
 ```
-git clone git@github.com:SaitoTsutomu/study-polars.git
-cd study-polars
+curl -L -o study-polars.zip https://github.com/SaitoTsutomu/study-polars/archive/refs/heads/master.zip
+unzip study-polars.zip
+cd study-polars-master
 ```
 
 ## 学習開始
 
-Jupyterを起動してください。
+教材は、`nbs/study_polars.ipynb`です。
+次のコマンドを実行すると、教材を`work/study_polars.ipynb`にコピーし、Jupyterが起動します。
 
 ```
 uv run study-polars
 ```
 
-`study_polars.ipynb`を開いてください。
+※ `work/study_polars.ipynb`が存在する場合はコピーしません。2回目以降は続きから学習できます。もし、新規に始めたい場合は、`uv run study-polars --new`としてください。
+
+`study_polars.ipynb`を開いて学習を始めてください。
 
 ### 手順
 

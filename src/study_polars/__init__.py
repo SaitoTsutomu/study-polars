@@ -9,7 +9,7 @@ def main():
     cwd = Path()
     (cwd / "work").mkdir(exist_ok=True)
     nb = "study_polars.ipynb"
-    if not (cwd / "work" / nb).exists():
+    if sys.argv[-1] == "--new" or not (cwd / "work" / nb).exists():
         shutil.copyfile(cwd / "nbs" / nb, cwd / "work" / nb)
     sys.argv = ["jupyter", "lab", "work"]
     sys.exit(jupyter_main())
