@@ -21,7 +21,7 @@ def proc_prob(fp_ok, fp_ng, count, cell1, cell2, cell3, cell4):  # noqa: C901 PL
         raise ValueError(msg)
     if not source.endswith("**解答欄**"):
         raise ValueError(msg)
-    if metadata["editable"] or not metadata["frozen"]:
+    if metadata.get("editable", False) or not metadata.get("frozen", False):
         raise ValueError(msg)
     title = source.splitlines()[0]
     fp_ok.write("\nprint('# ==========')\n")
@@ -37,7 +37,7 @@ def proc_prob(fp_ok, fp_ng, count, cell1, cell2, cell3, cell4):  # noqa: C901 PL
     last = source.strip().splitlines()[-1]
     if not last.startswith("# ここから解答を作成"):
         raise ValueError(msg)
-    if not metadata["editable"] or metadata["frozen"]:
+    if not metadata.get("editable", False) or metadata.get("frozen", False):
         raise ValueError(msg)
     fp_ok.write(f"{source}\n")
     fp_ng.write(f"{source}\n")
@@ -54,7 +54,7 @@ def proc_prob(fp_ok, fp_ng, count, cell1, cell2, cell3, cell4):  # noqa: C901 PL
     answers = re.findall("```python\n(.*?)```", source, re.DOTALL)
     if not answers:
         raise ValueError(msg)
-    if metadata["editable"] or not metadata["frozen"]:
+    if metadata.get("editable", False) or not metadata.get("frozen", False):
         raise ValueError(msg)
 
     msg = f"Cell {count + 3}: invalid 検証"
@@ -64,7 +64,11 @@ def proc_prob(fp_ok, fp_ng, count, cell1, cell2, cell3, cell4):  # noqa: C901 PL
         raise ValueError(msg)
     if not source.startswith("# このセルを実行してください"):
         raise ValueError(msg)
-    if metadata["editable"] or metadata["frozen"] or "source_hidden" not in metadata.get("jupyter", {}):
+    if (
+        metadata.get("editable", False)
+        or metadata.get("frozen", False)
+        or "source_hidden" not in metadata.get("jupyter", {})
+    ):
         raise ValueError(msg)
     for answer in answers:
         fp_ok.write(f"{answer}\n")
