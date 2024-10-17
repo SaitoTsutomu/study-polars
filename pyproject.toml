@@ -2,7 +2,7 @@
 authors = [{name = "Saito Tsutomu", email = "tsutomu7@hotmail.co.jp"}]
 dependencies = [
   "jupyterlab>=4.2.5",
-  "polars>=1.9.0",
+  "polars[plot]>=1.9.0",
 ]
 description = "Add your description here"
 license = {text = "Apache-2.0"}
