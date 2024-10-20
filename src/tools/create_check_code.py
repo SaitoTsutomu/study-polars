@@ -2,8 +2,8 @@
 下記を実行して何も出力されなければ問題なし
 ```
 uv run src/tools/create_check_code.py &&\
-(cd tmp; uv run code_ok.py) | grep NG &&\
-(cd tmp; uv run code_ng.py) | grep OK
+uv run tmp/code_ok.py | grep NG &&\
+uv run tmp/code_ng.py | grep OK
 ```
 """  # noqa: INP001
 
@@ -78,6 +78,8 @@ def proc_prob(fp_ok, fp_ng, count, cell1, cell2, cell3, cell4):  # noqa: C901 PL
 
 
 def create_check_code(nb_path, fp_ok, fp_ng):
+    fp_ok.write("import os\nos.chdir('tmp')\n")
+    fp_ng.write("import os\nos.chdir('tmp')\n")
     nb = nbformat.reads(nb_path.read_text(), 4)
     cells = nb["cells"]
     n_cells = len(cells)
@@ -93,6 +95,13 @@ def create_check_code(nb_path, fp_ok, fp_ng):
             raise ValueError(msg)
         cell_type = cell["cell_type"]
         if cell_type == "markdown":
+            if m := re.search(r"^skip (\d+)", source):
+                n = int(m.group(1))
+                print(f"Skip {n} cells at {count}")
+                count += n
+                for _ in range(n):
+                    next(it)
+                continue
             if source.startswith("### `問題"):
                 prev = title
                 title = proc_prob(fp_ok, fp_ng, count, cell, next(it), next(it), next(it))
