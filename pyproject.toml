@@ -31,7 +31,7 @@ exclude = ["*.ipynb"]
 src = ["src"]
 
 [tool.ruff.lint]
-ignore = ["ANN", "CPY", "D", "DOC201", "E501"]
+ignore = ["ANN", "CPY", "D", "DOC201", "E501", "INP001", "PLR2004", "T201"]
 preview = true
 select = [
   "F", # Pyflakes https://docs.astral.sh/ruff/rules/#pyflakes-f

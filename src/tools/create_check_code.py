@@ -5,7 +5,7 @@ uv run src/tools/create_check_code.py &&\
 uv run tmp/code_ok.py | grep NG &&\
 uv run tmp/code_ng.py | grep OK
 ```
-"""  # noqa: INP001
+"""
 
 import re
 from pathlib import Path
@@ -77,7 +77,7 @@ def proc_prob(fp_ok, fp_ng, count, cell1, cell2, cell3, cell4):  # noqa: C901 PL
     return title
 
 
-def create_check_code(nb_path, fp_ok, fp_ng):
+def create_check_code(nb_path, fp_ok, fp_ng):  # noqa: C901
     fp_ok.write("import os\nos.chdir('tmp')\n")
     fp_ng.write("import os\nos.chdir('tmp')\n")
     nb = nbformat.reads(nb_path.read_text(), 4)

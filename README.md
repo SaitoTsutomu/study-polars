@@ -43,3 +43,10 @@ uv run study-polars
 
 セル内でしか使わない変数は、`_`で始まります。
 
+## 採点
+
+次のようにすると、正解数などを表示します。
+
+```
+uv run src/tools/score.py
+```
