@@ -21,13 +21,15 @@ def show_score(dir_="work", file="study_polars.ipynb"):
             n_ng += 1
     rate = n_ok / (n_ok + n_ng)
     print(f"{n_ok + n_ng}問中 {n_ok}問正解({rate:.0%})")
-    if rate == 0:
+    if rate < 0.1:
         print("ここからスタートだ!")
-    elif rate < 0.2:
+    elif rate < 0.3:
         print("やったね! 少し進んだよ")
     elif rate < 0.5:
-        print("いいね! 半分正解したよ")
+        print("いいね! もうすぐ半分")
     elif rate < 0.8:
+        print("さすが! 成果が出てるよ")
+    elif rate < 0.999:
         print("素晴らしい! ほぼ完璧")
     else:
         print("完璧! おめでとう!")
