@@ -15,7 +15,7 @@ def show_score(dir_="work", file="study_polars.ipynb"):
             continue
         outputs = cell.get("outputs", [])
         text = "".join(output["text"] for output in outputs if output["output_type"] == "stream")
-        if text.startswith("\x1b[31mOK"):
+        if text.startswith("\x1b[32mOK"):
             n_ok += 1
         elif text.startswith("\x1b[31mNG"):
             n_ng += 1
