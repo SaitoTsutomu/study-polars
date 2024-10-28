@@ -78,8 +78,8 @@ def proc_prob(fp_ok, fp_ng, count, cell1, cell2, cell3, cell4):  # noqa: C901 PL
 
 
 def create_check_code(nb_path, fp_ok, fp_ng):  # noqa: C901
-    fp_ok.write("import os\nos.chdir('tmp')\n")
-    fp_ng.write("import os\nos.chdir('tmp')\n")
+    fp_ok.write("import os\nimport re\nos.chdir('tmp')\n")
+    fp_ng.write("import os\nimport re\nos.chdir('tmp')\n")
     nb = nbformat.reads(nb_path.read_text(), 4)
     cells = nb["cells"]
     n_cells = len(cells)
