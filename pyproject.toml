@@ -1,8 +1,8 @@
 [project]
 authors = [{name = "Saito Tsutomu", email = "tsutomu7@hotmail.co.jp"}]
 dependencies = [
-  "jupyterlab>=4.2.5",
-  "polars[numpy,plot]>=1.11.0",
+  "jupyterlab>=4.3.0",
+  "polars[numpy,plot]>=1.12.0",
 ]
 description = "Add your description here"
 license = {text = "Apache-2.0"}
