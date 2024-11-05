@@ -13,8 +13,17 @@ from pathlib import Path
 import nbformat
 
 
-def proc_prob(fp_ok, fp_ng, count, cell1, cell2, cell3, cell4):  # noqa: C901 PLR0912 PLR0913 PLR0915 PLR0917
-    msg = f"Cell {count}: invalid 問題"
+def proc_prob(  # noqa: C901 PLR0912 PLR0913 PLR0915 PLR0917
+    fp_ok,
+    fp_ng,
+    count,
+    prob_source,
+    cell1,
+    cell2,
+    cell3,
+    cell4,
+):
+    msg = f"Cell {count}: invalid 問題\n{prob_source}"
     source = cell1["source"]
     metadata = cell1["metadata"]
     if not re.match("### `問題[0-9A-Z]{3}`", source):
@@ -29,7 +38,7 @@ def proc_prob(fp_ok, fp_ng, count, cell1, cell2, cell3, cell4):  # noqa: C901 PL
     fp_ok.write(f"print('{title}')\n")
     fp_ng.write(f"print('{title}')\n")
 
-    msg = f"Cell {count + 1}: invalid 解答欄"
+    msg = f"Cell {count + 1}: invalid 解答欄\n{prob_source}"
     source = cell2["source"]
     metadata = cell2["metadata"]
     if cell2["cell_type"] != "code":
@@ -42,7 +51,7 @@ def proc_prob(fp_ok, fp_ng, count, cell1, cell2, cell3, cell4):  # noqa: C901 PL
     fp_ok.write(f"{source}\n")
     fp_ng.write(f"{source}\n")
 
-    msg = f"Cell {count + 2}: invalid 解答例"
+    msg = f"Cell {count + 2}: invalid 解答例\n{prob_source}"
     source = cell3["source"]
     metadata = cell3["metadata"]
     if cell3["cell_type"] != "markdown":
@@ -57,7 +66,7 @@ def proc_prob(fp_ok, fp_ng, count, cell1, cell2, cell3, cell4):  # noqa: C901 PL
     if metadata.get("editable", False) or not metadata.get("frozen", False):
         raise ValueError(msg)
 
-    msg = f"Cell {count + 3}: invalid 検証"
+    msg = f"Cell {count + 3}: invalid 検証\n{prob_source}"
     source = cell4["source"]
     metadata = cell4["metadata"]
     if cell4["cell_type"] != "code":
@@ -83,7 +92,7 @@ def create_check_code(nb_path, fp_ok, fp_ng):  # noqa: C901
     nb = nbformat.reads(nb_path.read_text(), 4)
     cells = nb["cells"]
     n_cells = len(cells)
-    title = ""
+    title = prob_source = ""
     it = iter(cells)
     count = 0
     while count < n_cells:
@@ -103,19 +112,20 @@ def create_check_code(nb_path, fp_ok, fp_ng):  # noqa: C901
                     next(it)
                 continue
             if source.startswith("### `問題"):
+                prob_source = source
                 prev = title
-                title = proc_prob(fp_ok, fp_ng, count, cell, next(it), next(it), next(it))
+                title = proc_prob(fp_ok, fp_ng, count, prob_source, cell, next(it), next(it), next(it))
                 if prev > title:
-                    msg = f"Cell {count}: invalid 問題"
+                    msg = f"Cell {count}: invalid 問題\n{prob_source}"
                     raise ValueError(msg)
                 count += 3
             elif source.startswith("<details><summary>解答例</summary>"):
-                msg = f"Cell {count}: invalid 解答例"
+                msg = f"Cell {count}: invalid 解答例\n{prob_source}"
                 raise ValueError(msg)
         elif cell_type == "code":
             last = source.strip().splitlines()[-1]
             if last.startswith("# ここから解答を作成"):
-                msg = f"Cell {count}: invalid 解答欄"
+                msg = f"Cell {count}: invalid 解答欄\n{prob_source}"
                 raise ValueError(msg)
             if source.startswith("# このセルを実行してください"):
                 fp_ok.write(f"{source}\n")
