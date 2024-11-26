@@ -1,8 +1,8 @@
 [project]
 authors = [{name = "Saito Tsutomu", email = "tsutomu7@hotmail.co.jp"}]
 dependencies = [
-  "jupyterlab>=4.3.0",
-  "polars[numpy,plot]>=1.12.0",
+  "jupyterlab>=4.3.1",
+  "polars[numpy,plot]>=1.15.0",
 ]
 description = "Add your description here"
 license = {text = "Apache-2.0"}
@@ -19,7 +19,7 @@ study-polars = "study_polars:main"
 
 [tool.uv]
 dev-dependencies = [
-  "jupyterlab-freeze>=0.1.1",
+  "jupyterlab-freeze>=0.1.2",
 ]
 
 [tool.mypy]
@@ -31,7 +31,7 @@ exclude = ["*.ipynb"]
 src = ["src"]
 
 [tool.ruff.lint]
-ignore = ["ANN", "CPY", "D", "DOC201", "E501", "INP001", "PLR2004", "T201"]
+ignore = ["ANN", "CPY", "D", "DOC201", "E501", "INP001", "PLR2004", "RUF039", "T201"]
 preview = true
 select = [
   "F", # Pyflakes https://docs.astral.sh/ruff/rules/#pyflakes-f
@@ -75,7 +75,7 @@ select = [
   "SLOT", # flake8-slots https://docs.astral.sh/ruff/rules/#flake8-slots-slot
   "SIM", # flake8-simplify https://docs.astral.sh/ruff/rules/#flake8-simplify-sim
   "TID", # flake8-tidy-imports https://docs.astral.sh/ruff/rules/#flake8-tidy-imports-tid
-  "TCH", # flake8-type-checking https://docs.astral.sh/ruff/rules/#flake8-type-checking-tch
+  "TC", # flake8-type-checking https://docs.astral.sh/ruff/rules/#flake8-type-checking-tc
   "INT", # flake8-gettext https://docs.astral.sh/ruff/rules/#flake8-gettext-int
   "ARG", # flake8-unused-arguments https://docs.astral.sh/ruff/rules/#flake8-unused-arguments-arg
   "PTH", # flake8-use-pathlib https://docs.astral.sh/ruff/rules/#flake8-use-pathlib-pth
