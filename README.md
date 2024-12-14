@@ -2,7 +2,7 @@
 
 ## はじめに
 
-これはPolars 1.16.0の学習用の教材です。
+これはPolars 1.17.1の学習用の教材です。
 
 https://polars-ja.github.io/docs-ja/
 
